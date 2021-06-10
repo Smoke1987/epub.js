@@ -1,3 +1,6 @@
+# FORK
+This repo is fork https://github.com/futurepress/epub.js
+
 # Epub.js v0.3
 
 ![FuturePress Views](http://fchasen.com/futurepress/fp.png)
