@@ -38,7 +38,8 @@ class ContinuousViewManager extends DefaultViewManager {
 			layout: this.layout,
 			width: 0,
 			height: 0,
-			forceEvenPages: false
+			forceEvenPages: false,
+			method: this.settings.method,
 		};
 
 		this.scrollTop = 0;
