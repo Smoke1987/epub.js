@@ -236,6 +236,8 @@ class Rendition {
 
 		this.flow(this.settings.globalLayoutProperties.flow);
 
+		// Extend custom layout properties (such as page paddings)
+		this.settings.globalLayoutProperties = extend(this.settings.globalLayoutProperties, this.settings.layoutSettings || {});
 		this.layout(this.settings.globalLayoutProperties);
 
 		// Listen for displayed views
@@ -892,7 +894,7 @@ class Rendition {
 	 */
 	triggerSelectedEvent(cfirange, contents){
 		/**
-		 * Emit that a text selection has occured
+		 * Emit that a text selection has occurred
 		 * @event selected
 		 * @param {string} cfirange
 		 * @param {Contents} contents
