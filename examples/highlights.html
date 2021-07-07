@@ -117,6 +117,8 @@
     rendition.on("selected", function(cfiRange, contents) {
       rendition.annotations.highlight(cfiRange, {}, (e) => {
         console.log("highlight clicked", e.target);
+      }, 'custom-higlight', {
+        'fill': '#8B3FFD', 'fill-opacity': '0.4', 'mix-blend-mode': 'multiply', 'pointer-events': 'auto'
       });
       contents.window.getSelection().removeAllRanges();
 
@@ -126,8 +128,9 @@
       '::selection': {
         'background': 'rgba(255,255,0, 0.3)'
       },
+      // FIXME:: this not working
       '.epubjs-hl' : {
-        'fill': 'yellow', 'fill-opacity': '0.3', 'mix-blend-mode': 'multiply'
+        'fill': 'red !important', 'fill-opacity': '0.3', 'mix-blend-mode': 'multiply'
       }
     });
 

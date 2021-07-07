@@ -1,4 +1,4 @@
-import { extend } from "./utils/core";
+import {extend, isNumber} from "./utils/core";
 import { EVENTS } from "./utils/constants";
 import EventEmitter from "event-emitter";
 
@@ -101,7 +101,6 @@ class Layout {
 	 * @param  {number} _gap    width of the gap between columns
 	 */
 	calculate(_width, _height, _gap){
-
 		var divisor = 1;
 		var gap = _gap || 0;
 
@@ -123,7 +122,7 @@ class Layout {
 			divisor = 1;
 		}
 
-		if (this.name === "reflowable" && this._flow === "paginated" && !(_gap >= 0)) {
+		if (this.name === "reflowable" && this._flow === "paginated" && (isNumber(_gap) && !(_gap >= 0)) ) {
 			gap = ((section % 2 === 0) ? section : section - 1);
 		}
 
@@ -195,7 +194,7 @@ class Layout {
 		if (this.name === "pre-paginated") {
 			formating = contents.fit(this.columnWidth, this.height, section);
 		} else if (this._flow === "paginated") {
-			formating = contents.columns(this.width, this.height, this.columnWidth, this.gap, this.settings.direction);
+			formating = contents.columns(this.width, this.height, this.columnWidth, this.gap, this.settings.direction, this.settings.padding);
 		} else if (axis && axis === "horizontal") {
 			formating = contents.size(null, this.height);
 		} else {

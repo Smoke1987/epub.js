@@ -1046,8 +1046,10 @@ class Contents {
 	 * @param {number} height
 	 * @param {number} columnWidth
 	 * @param {number} gap
+	 * @param {string} dir
+	 * @param { vertical: {top,bottom} } , horizontal: {left,right} } padding
 	 */
-	columns(width, height, columnWidth, gap, dir){
+	columns(width, height, columnWidth, gap, dir, padding){
 		let COLUMN_AXIS = prefixed("column-axis");
 		let COLUMN_GAP = prefixed("column-gap");
 		let COLUMN_WIDTH = prefixed("column-width");
@@ -1076,16 +1078,40 @@ class Contents {
 		this.css("margin", "0", true);
 
 		if (axis === "vertical") {
-			this.css("padding-top", (gap / 2) + "px", true);
-			this.css("padding-bottom", (gap / 2) + "px", true);
-			this.css("padding-left", "20px");
-			this.css("padding-right", "20px");
+			var padding_top = (gap / 2) + "px";
+			var padding_bottom = (gap / 2) + "px";
+			if (padding && padding.vertical) {
+				padding_top = padding.vertical.top + "px";
+				padding_bottom = padding.vertical.bottom + "px";
+			}
+			var padding_left = "20px";
+			var padding_right = "20px";
+			if (padding && padding.horizontal) {
+				padding_left = padding.horizontal.left + "px";
+				padding_right = padding.horizontal.right + "px";
+			}
+			this.css("padding-top", padding_top, true);
+			this.css("padding-bottom", padding_bottom, true);
+			this.css("padding-left", padding_left);
+			this.css("padding-right", padding_right);
 			this.css(COLUMN_AXIS, "vertical");
 		} else {
-			this.css("padding-top", "20px");
-			this.css("padding-bottom", "20px");
-			this.css("padding-left", (gap / 2) + "px", true);
-			this.css("padding-right", (gap / 2) + "px", true);
+			var padding_top_h = "20px";
+			var padding_bottom_h = "20px";
+			if (padding && padding.vertical) {
+				padding_top_h = isNumber(padding.vertical.top) ? padding.vertical.top + "px" : padding.vertical.top;
+				padding_bottom_h = isNumber(padding.vertical.bottom) ? padding.vertical.bottom + "px" : padding.vertical.bottom;
+			}
+			var padding_left_h = (gap / 2) + "px";
+			var padding_right_h = (gap / 2) + "px";
+			if (padding && padding.horizontal) {
+				padding_left_h = isNumber(padding.horizontal.left) ? padding.horizontal.left + "px" : padding.horizontal.left;
+				padding_right_h = isNumber(padding.horizontal.right) ? padding.horizontal.right + "px": padding.horizontal.right;
+			}
+			this.css("padding-top", padding_top_h);
+			this.css("padding-bottom", padding_bottom_h);
+			this.css("padding-left", padding_left_h, true);
+			this.css("padding-right", padding_right_h, true);
 			this.css(COLUMN_AXIS, "horizontal");
 		}
 
@@ -1094,7 +1120,8 @@ class Contents {
 
 		this.css(COLUMN_FILL, "auto");
 
-		this.css(COLUMN_GAP, gap+"px");
+		var gapValue = isNumber(gap) ? gap+"px" : gap;
+		this.css(COLUMN_GAP, gapValue);
 		this.css(COLUMN_WIDTH, columnWidth+"px");
 
 		// Fix glyph clipping in WebKit
