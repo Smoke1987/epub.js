@@ -260,6 +260,13 @@ class Rendition {
 		 */
 		this.emit(EVENTS.RENDITION.STARTED);
 
+		// Listen unlock-swipe
+		this.on("unlock-swipe", () => {
+			if (this.manager && this.manager.snapper) {
+				this.manager.snapper.blockSwipe = false;
+			}
+		});
+
 		// Start processing queue
 		this.starting.resolve();
 	}
@@ -901,6 +908,10 @@ class Rendition {
 		 * @memberof Rendition
 		 */
 		this.emit(EVENTS.RENDITION.SELECTED, cfirange, contents);
+		if (this.manager && this.manager.snapper) {
+			this.manager.snapper.blockSwipe = true;
+		}
+		// this.manager.emit(EVENTS.RENDITION.SELECTED, contents);
 	}
 
 	/**

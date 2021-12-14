@@ -83,6 +83,7 @@ class Snap {
 		this.endTouchY = undefined;
 		this.endTime = undefined;
 
+		this.blockSwipe = false;
 		this.addListeners();
 	}
 
@@ -156,6 +157,9 @@ class Snap {
 	}
 
 	triggerViewEvent(e, contents){
+		if(this.blockSwipe) {
+			return;
+		}
 		this.emit(e.type, e, contents);
 	}
 
